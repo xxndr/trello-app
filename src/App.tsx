@@ -1,20 +1,18 @@
 import React from "react";
 import { AppContainer } from "./styles";
 import { Column } from "./Column";
-import { Card } from "./Card";
+import { AddNewItem } from "./AddNewItem";
+import { useAppState } from "./useAppState";
 
 function App() {
+  const { state } = useAppState();
+
   return (
     <AppContainer>
-      <Column text={"To do"}>
-        <Card text={"Generate app scaffold"} />
-      </Column>
-      <Column text={"In progress"}>
-        <Card text={"Learn typescript"} />
-      </Column>
-      <Column text={"Done"}>
-        <Card text={"Begin to use static typing"} />
-      </Column>
+      {state.lists.map((list, i) => {
+        return <Column text={list.text} key={list.id} index={i} />;
+      })}
+      <AddNewItem onAdd={console.log} toggleButtonText={"+ Add another list"} />
     </AppContainer>
   );
 }

@@ -15,16 +15,6 @@ export const ColumnTitle = styled.div`
   font-weight: bold;
 `;
 
-export const CardContainer = styled.div`
-  background: #fff;
-  cursor: pointer;
-  margin-bottom: 0.5rem;
-  padding: 0.5rem 1rem;
-  max-width: 300px;
-  border-radius: 3px;
-  box-shadow: #091e4240 0 1px 0 0;
-`;
-
 interface AddItemButtonProps {
   dark?: boolean;
 }
@@ -100,4 +90,14 @@ export const CustomDragLayerContainer = styled.div`
   top: 0;
   width: 100%;
   z-index: 100;
+`;
+
+export const CardContainer = styled(DragPreviewContainer)`
+  background: #fff;
+  cursor: pointer;
+  margin-bottom: 0.5rem;
+  padding: 0.5rem 1rem;
+  max-width: 300px;
+  border-radius: 3px;
+  box-shadow: #091e4240 0 1px 0 0;
 `;

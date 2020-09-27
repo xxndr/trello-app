@@ -1,12 +1,17 @@
+export enum DragTypes {
+  column = "COLUMN",
+  card = "CARD",
+}
+
 export type ColumnDragItem = {
-  type: "COLUMN";
+  type: DragTypes.column;
   id: string;
   text: string;
   index: number;
 };
 
 export type CardDragItem = {
-  type: "CARD";
+  type: DragTypes.card;
   id: string;
   text: string;
   index: number;

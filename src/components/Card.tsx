@@ -1,11 +1,12 @@
 import React, { useRef } from "react";
 
-import { CardContainer } from "./styles";
+import { CardContainer } from "../styles/styles";
 import { useDrop } from "react-dnd";
-import { CardDragItem } from "./DragItem";
-import { useAppState } from "./useAppState";
-import { useItemDrag } from "./useItemDrag";
-import { isHidden } from "./utils/isHidden";
+import { CardDragItem, DragTypes } from "../dragAndDrop/DragItem";
+import { useAppState } from "../hooks/useAppState";
+import { useItemDrag } from "../hooks/useItemDrag";
+import { isHidden } from "../utils/isHidden";
+import { ActionTypes } from "../actions/types";
 
 interface CardProps {
   text: string;
@@ -19,7 +20,7 @@ export const Card = ({ text, id, index, columnId, isPreview }: CardProps) => {
   const { dispatch, state } = useAppState();
 
   const { drag } = useItemDrag({
-    type: "CARD",
+    type: DragTypes.card,
     id,
     text,
     index,
@@ -29,7 +30,7 @@ export const Card = ({ text, id, index, columnId, isPreview }: CardProps) => {
   const ref = useRef<HTMLDivElement>(null);
 
   const [, drop] = useDrop({
-    accept: "CARD",
+    accept: DragTypes.card,
     hover(item: CardDragItem) {
       if (item.id === id) {
         return;
@@ -40,7 +41,7 @@ export const Card = ({ text, id, index, columnId, isPreview }: CardProps) => {
       const sourceColumn = item.columnId;
       const targetColumn = columnId;
       dispatch({
-        type: "MOVE_TASK",
+        type: ActionTypes.moveTask,
         payload: {
           dragIndex,
           hoverIndex,
@@ -58,7 +59,7 @@ export const Card = ({ text, id, index, columnId, isPreview }: CardProps) => {
   return (
     <CardContainer
       ref={ref}
-      isHidden={isHidden(isPreview, state.draggedItem, "CARD", id)}
+      isHidden={isHidden(isPreview, state.draggedItem, DragTypes.card, id)}
       isPreview={isPreview}
     >
       {text}

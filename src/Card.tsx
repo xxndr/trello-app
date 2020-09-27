@@ -3,8 +3,8 @@ import React, { useRef } from "react";
 import { CardContainer } from "./styles";
 import { useDrop } from "react-dnd";
 import { CardDragItem } from "./DragItem";
-import { useAppState } from "./useAppState";
-import { useItemDrag } from "./useItemDrag";
+import { useAppState } from "./hooks/useAppState";
+import { useItemDrag } from "./hooks/useItemDrag";
 import { isHidden } from "./utils/isHidden";
 
 interface CardProps {

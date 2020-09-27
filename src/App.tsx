@@ -2,7 +2,7 @@ import React from "react";
 import { AppContainer } from "./styles";
 import { Column } from "./Column";
 import { AddNewItem } from "./AddNewItem";
-import { useAppState } from "./useAppState";
+import { useAppState } from "./hooks/useAppState";
 import { CustomDragLayer } from "./customDragLayer";
 
 function App() {

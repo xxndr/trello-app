@@ -1,10 +1,10 @@
 import React, { useRef } from "react";
 import { ColumnContainer, ColumnTitle } from "./styles";
 import { AddNewItem } from "./AddNewItem";
-import { useAppState } from "./useAppState";
+import { useAppState } from "./hooks/useAppState";
 import { Card } from "./Card";
 import { useDrop } from "react-dnd";
-import { useItemDrag } from "./useItemDrag";
+import { useItemDrag } from "./hooks/useItemDrag";
 import { DragItem } from "./DragItem";
 import { isHidden } from "./utils/isHidden";
 

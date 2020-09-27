@@ -2,8 +2,11 @@ import React, { useReducer } from "react";
 import { createContext } from "react";
 import { nanoid } from "nanoid";
 import { findItemIndexById } from "./utils/findItemIndexById";
+import { moveItem } from "./utils/moveItem";
+import { DragItem } from "./DragItem";
 
 const appData: AppState = {
+  draggedItem: undefined,
   lists: [
     {
       id: "0",
@@ -36,6 +39,7 @@ interface Todo {
 
 interface AppState {
   lists: Todo[];
+  draggedItem: DragItem | undefined;
 }
 
 interface AppStateContextProps {
@@ -58,6 +62,17 @@ type Action =
         text: string;
         listId: string;
       };
+    }
+  | {
+      type: "MOVE_LIST";
+      payload: {
+        dragIndex: number;
+        hoverIndex: number;
+      };
+    }
+  | {
+      type: "SET_DRAGGED_ITEM";
+      payload: DragItem | undefined;
     };
 
 const appStateReducer = (state: AppState, action: Action): AppState => {
@@ -84,6 +99,18 @@ const appStateReducer = (state: AppState, action: Action): AppState => {
         ...state,
       };
     }
+    case "MOVE_LIST": {
+      const { dragIndex, hoverIndex } = action.payload;
+      state.lists = moveItem(state.lists, dragIndex, hoverIndex);
+      return {
+        ...state,
+      };
+    }
+
+    case "SET_DRAGGED_ITEM": {
+      return { ...state, draggedItem: action.payload };
+    }
+
     default:
       return state;
   }

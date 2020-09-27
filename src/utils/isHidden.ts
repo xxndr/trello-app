@@ -1,4 +1,4 @@
-import { DragItem } from "../DragItem";
+import { DragItem } from "../dragAndDrop/DragItem";
 
 export const isHidden = (
   isPreview: boolean | undefined,

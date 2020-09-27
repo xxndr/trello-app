@@ -1,9 +1,10 @@
 import React from "react";
-import { AppContainer } from "./styles";
+import { AppContainer } from "../styles/styles";
 import { Column } from "./Column";
 import { AddNewItem } from "./AddNewItem";
-import { useAppState } from "./hooks/useAppState";
-import { CustomDragLayer } from "./customDragLayer";
+import { useAppState } from "../hooks/useAppState";
+import { CustomDragLayer } from "../dragAndDrop/customDragLayer";
+import { ActionTypes } from "../actions/types";
 
 function App() {
   const { state, dispatch } = useAppState();
@@ -15,7 +16,7 @@ function App() {
         return <Column text={list.text} key={list.id} index={i} id={list.id} />;
       })}
       <AddNewItem
-        onAdd={(text) => dispatch({ type: "ADD_LIST", payload: text })}
+        onAdd={(text) => dispatch({ type: ActionTypes.addList, payload: text })}
         toggleButtonText={"+ Add another list"}
       />
     </AppContainer>

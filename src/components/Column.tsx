@@ -1,12 +1,13 @@
 import React, { useRef } from "react";
-import { ColumnContainer, ColumnTitle } from "./styles";
+import { ColumnContainer, ColumnTitle } from "../styles/styles";
 import { AddNewItem } from "./AddNewItem";
-import { useAppState } from "./hooks/useAppState";
+import { useAppState } from "../hooks/useAppState";
 import { Card } from "./Card";
 import { useDrop } from "react-dnd";
-import { useItemDrag } from "./hooks/useItemDrag";
-import { DragItem } from "./DragItem";
-import { isHidden } from "./utils/isHidden";
+import { useItemDrag } from "../hooks/useItemDrag";
+import { DragItem, DragTypes } from "../dragAndDrop/DragItem";
+import { isHidden } from "../utils/isHidden";
+import { ActionTypes } from "../actions/types";
 
 interface ColumnProps {
   text: string;
@@ -21,9 +22,9 @@ export const Column = ({ text, index, id, isPreview }: ColumnProps) => {
   const ref = useRef<HTMLDivElement>(null);
 
   const [, drop] = useDrop({
-    accept: ["COLUMN", "CARD"],
+    accept: [DragTypes.column, DragTypes.card],
     hover: (item: DragItem) => {
-      if (item.type === "COLUMN") {
+      if (item.type === DragTypes.column) {
         const dragIndex = item.index;
         const hoverIndex = index;
 
@@ -32,7 +33,7 @@ export const Column = ({ text, index, id, isPreview }: ColumnProps) => {
         }
 
         dispatch({
-          type: "MOVE_LIST",
+          type: ActionTypes.moveList,
           payload: {
             dragIndex,
             hoverIndex,
@@ -49,7 +50,7 @@ export const Column = ({ text, index, id, isPreview }: ColumnProps) => {
         }
 
         dispatch({
-          type: "MOVE_TASK",
+          type: ActionTypes.moveTask,
           payload: {
             dragIndex,
             hoverIndex,
@@ -67,17 +68,15 @@ export const Column = ({ text, index, id, isPreview }: ColumnProps) => {
     id,
     text,
     index,
-    type: "COLUMN",
+    type: DragTypes.column,
   });
 
   drag(drop(ref));
 
-  console.log(isPreview);
-
   return (
     <ColumnContainer
       ref={ref}
-      isHidden={isHidden(isPreview, state.draggedItem, "COLUMN", id)}
+      isHidden={isHidden(isPreview, state.draggedItem, DragTypes.column, id)}
       isPreview={isPreview}
     >
       <ColumnTitle>{text}</ColumnTitle>
@@ -94,7 +93,7 @@ export const Column = ({ text, index, id, isPreview }: ColumnProps) => {
         onAdd={(task) => {
           console.log("add");
           dispatch({
-            type: "ADD_TASK",
+            type: ActionTypes.addTask,
             payload: {
               text: task,
               listId: id,

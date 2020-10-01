@@ -4,7 +4,7 @@ import { Action } from "../actions/types";
 import { appStateReducer } from "../reducers/appState";
 import { AppState } from "../reducers/types";
 
-const appData: AppState = {
+export const appData: AppState = {
   draggedItem: undefined,
   lists: [
     {

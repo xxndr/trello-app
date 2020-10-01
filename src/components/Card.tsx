@@ -6,7 +6,7 @@ import { CardDragItem, DragTypes } from "../dragAndDrop/DragItem";
 import { useAppState } from "../hooks/useAppState";
 import { useItemDrag } from "../hooks/useItemDrag";
 import { isHidden } from "../utils/isHidden";
-import { ActionTypes } from "../actions/types";
+import { moveTask } from "../actions";
 
 interface CardProps {
   text: string;
@@ -40,15 +40,7 @@ export const Card = ({ text, id, index, columnId, isPreview }: CardProps) => {
       const hoverIndex = index;
       const sourceColumn = item.columnId;
       const targetColumn = columnId;
-      dispatch({
-        type: ActionTypes.moveTask,
-        payload: {
-          dragIndex,
-          hoverIndex,
-          sourceColumn,
-          targetColumn,
-        },
-      });
+      dispatch(moveTask(dragIndex, hoverIndex, sourceColumn, targetColumn));
       item.index = hoverIndex;
       item.columnId = targetColumn;
     },

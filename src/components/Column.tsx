@@ -7,7 +7,7 @@ import { useDrop } from "react-dnd";
 import { useItemDrag } from "../hooks/useItemDrag";
 import { DragItem, DragTypes } from "../dragAndDrop/DragItem";
 import { isHidden } from "../utils/isHidden";
-import { ActionTypes } from "../actions/types";
+import { addTask, moveList, moveTask } from "../actions";
 
 interface ColumnProps {
   text: string;
@@ -32,13 +32,7 @@ export const Column = ({ text, index, id, isPreview }: ColumnProps) => {
           return;
         }
 
-        dispatch({
-          type: ActionTypes.moveList,
-          payload: {
-            dragIndex,
-            hoverIndex,
-          },
-        });
+        dispatch(moveList(dragIndex, hoverIndex));
         item.index = hoverIndex;
       } else {
         const dragIndex = item.index;
@@ -49,15 +43,7 @@ export const Column = ({ text, index, id, isPreview }: ColumnProps) => {
           return;
         }
 
-        dispatch({
-          type: ActionTypes.moveTask,
-          payload: {
-            dragIndex,
-            hoverIndex,
-            sourceColumn,
-            targetColumn,
-          },
-        });
+        dispatch(moveTask(dragIndex, hoverIndex, sourceColumn, targetColumn));
         item.index = hoverIndex;
         item.columnId = targetColumn;
       }
@@ -91,14 +77,7 @@ export const Column = ({ text, index, id, isPreview }: ColumnProps) => {
       ))}
       <AddNewItem
         onAdd={(task) => {
-          console.log("add");
-          dispatch({
-            type: ActionTypes.addTask,
-            payload: {
-              text: task,
-              listId: id,
-            },
-          });
+          dispatch(addTask(task, id));
         }}
         toggleButtonText={"+ Add another task"}
         dark
